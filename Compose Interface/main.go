@@ -2,12 +2,16 @@ package main
 
 import (
 	"bytes"
-	"crypto/sha1"
 	"encoding/hex"
 	"fmt"
 	"io"
 	"io/ioutil"
 )
+
+type HashReader interface {
+	io.Reader
+	hash() string
+}
 
 func main() {
 	payload := []byte("hello high value software engineers")
@@ -30,15 +34,10 @@ func (h *hashReader) hash() string {
 	return hex.EncodeToString(h.buf.Bytes())
 }
 
-func hashAndBroadcast(r io.Reader) error {
-	b, err := ioutil.ReadAll(r)
-	if err != nil {
-		return err
-	}
+func hashAndBroadcast(r HashReader) error {
+	hash := r.hash()
 
-	hash := sha1.Sum(b)
-
-	fmt.Println(hex.EncodeToString(hash[:]))
+	fmt.Println(hash)
 
 	return broadcast(r)
 }
