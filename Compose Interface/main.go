@@ -14,7 +14,7 @@ type HashReader interface {
 }
 
 func main() {
-	payload := []byte("hello high value software engineers")
+	payload := []byte("hello high value software engineer")
 	hashAndBroadcast(NewHashReader(payload))
 }
 
