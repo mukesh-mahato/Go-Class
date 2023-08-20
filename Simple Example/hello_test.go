@@ -26,5 +26,3 @@ func TestSayHello(t *testing.T) {
 		}
 	}
 }
-
-// go test ./...
